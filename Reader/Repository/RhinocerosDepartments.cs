@@ -12,8 +12,8 @@ namespace Reader.Repository
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("Code_Postale")]
-        public string Code_Postale { get; set; }
+        [BsonElement("CodePostale")]
+        public string CodePostale { get; set; }
 
         [BsonElement("DepartmentNom")]
         public string DepartmentNom { get; set; }

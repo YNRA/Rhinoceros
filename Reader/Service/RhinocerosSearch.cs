@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MongoDB.Driver;
-using MongoDB.Bson;
-using MongoDB.Driver.Linq;
-using Reader.Repository;
-using Reader.Service;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Reader.Service
 {
     public class Search
     {
+        [MinLength(3)]
         public string DepartmentName { get; set; }
         
         public string PostalCode { get; set; }

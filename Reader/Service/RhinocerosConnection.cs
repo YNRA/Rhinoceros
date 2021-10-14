@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
-using MongoDB.Bson;
 using MongoDB.Driver.Linq;
 using Reader.Repository;
 
@@ -40,7 +38,7 @@ namespace Reader.Service
         public IEnumerable<ObjetDepartment> GetDepartmentsByPostalCode(string PostalCode)
         {
             var query = _departments.AsQueryable()
-                      .Where(p => p.Code_Postale == PostalCode)
+                      .Where(p => p.CodePostale == PostalCode)
                       .Select(p => p);
 
             return query;
@@ -48,25 +46,22 @@ namespace Reader.Service
 
         public IEnumerable<ObjetDepartment> SearchDepartment(Search search)
         {   
-            
-            if (search.DepartmentName.Length < 3 | search.PostalCode.Length > 3)
+            if (search.ConditionPopulation.Contains(">"))
             {
-                throw new Exception("La recherche est invalide");
+                var query = _departments.AsQueryable()
+                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) && (p.Population > search.Population) )
+                      .Select(p => p);
+                      return query;
             }
             else
-            {        
-            var query = _departments.AsQueryable()
-                      .Where(p => p.Code_Postale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) )
+            {
+                var query = _departments.AsQueryable()
+                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) && (p.Population < search.Population) )
                       .Select(p => p);
-
-            return query;
-            }
+                      return query;                
+            }        
+            
         }        
 
     }  
 }
-
-
-            // var query = _departments.AsQueryable()
-            //           .Where(p => p.Code_Postale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) && (p.Population > search.Population)  )
-            //           .Select(p => p);

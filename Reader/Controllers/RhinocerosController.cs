@@ -1,14 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Reader.Repository;
-using MongoDB.Driver;
 using Reader.Service;
-using MongoDB.Bson;
-using MongoDB.Driver.Linq;
 
 
 namespace Reader.Controllers
@@ -25,7 +18,7 @@ namespace Reader.Controllers
             _departmentService = rhinocerosService;
         }
 
-        [HttpGet]                                               // https://localhost:5001/Rhinoceros/
+        [HttpGet]                                                   // https://localhost:5001/Rhinoceros/
         public ActionResult<List<ObjetDepartment>> Get() =>
             _departmentService.Get();  
             
@@ -44,7 +37,7 @@ namespace Reader.Controllers
             return NomDepartmentbyId;
         }
 
-        [HttpGet]    // https://localhost:5001/Rhinoceros/Gironde
+        [HttpGet]                                                   // https://localhost:5001/Rhinoceros/Gironde
         [Route("{name}")]
         public IEnumerable<ObjetDepartment> GetDepartmentsByName(string name)
         {
@@ -53,7 +46,7 @@ namespace Reader.Controllers
         }
 
 
-        [HttpGet("GetDepartmentByPostalCode")]    // https://localhost:5001/Rhinoceros/GetDepartmentByPostalCode?PostalCode=32
+        [HttpGet("GetDepartmentByPostalCode")]                      // https://localhost:5001/Rhinoceros/GetDepartmentByPostalCode?PostalCode=32
         public IEnumerable<ObjetDepartment> GetDepartmentsByPostalCode(string PostalCode)
         {
             var NomDepartmentbyPostalCode = _departmentService.GetDepartmentsByPostalCode(PostalCode);
@@ -61,7 +54,7 @@ namespace Reader.Controllers
         }
 
 
-        [HttpPost("search")] // curl -X POST "https://localhost:5001/Rhinoceros/search" -H  "accept: text/plain" -H  "Content-Type: application/json-patch+json" -d "{\"nom\":\"A\",\"nombre\":0,\"codePostal\":\"3\"}"
+        [HttpPost("search")]                                        // curl -X POST "https://localhost:5001/Rhinoceros/search" -H  "accept: text/plain" -H  "Content-Type: application/json-patch+json" -d "{\"nom\":\"A\",\"nombre\":0,\"codePostal\":\"3\"}"
         public IEnumerable<ObjetDepartment>  Rechercher(Search Search)
         {
             var SearchDepartment =  _departmentService.SearchDepartment(Search); 
