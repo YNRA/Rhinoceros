@@ -1,3 +1,6 @@
+# Api
+https://localhost:5001/swagger/index.html
+
 # Writer 
 Database is not set up, you have to run Writer in order to fill it up (dotnet run in Writer directory)
 
