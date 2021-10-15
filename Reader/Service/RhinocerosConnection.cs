@@ -49,16 +49,20 @@ namespace Reader.Service
             if (search.ConditionPopulation.Contains(">"))
             {
                 var query = _departments.AsQueryable()
-                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) && (p.Population > search.Population) )
-                      .Select(p => p);
+                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) )
+                      .Select(p => p).ToList();
+                
+                var query2 = query.Where(p => p.Population < search.Population).Select( p=>p );
                       return query;
             }
             else
             {
                 var query = _departments.AsQueryable()
-                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) && (p.Population < search.Population) )
-                      .Select(p => p);
-                      return query;                
+                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) )
+                      .Select(p => p).ToList();
+
+                var query2 = query.Where(p => p.Population > search.Population).Select( p=>p );
+                      return query;             
             }        
             
         }        
