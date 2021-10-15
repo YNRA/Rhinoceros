@@ -27,7 +27,7 @@ namespace Writer
                         {
                             {"CodePostale", values[0]},
                             {"DepartmentNom", values[1]},
-                            {"Population", values[2]},
+                            {"Population", Convert.ToInt32(values[2])},                            
                             {"GPS", values[3]}
                         };
 

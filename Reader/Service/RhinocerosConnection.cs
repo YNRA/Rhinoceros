@@ -46,25 +46,24 @@ namespace Reader.Service
 
         public IEnumerable<ObjetDepartment> SearchDepartment(Search search)
         {   
-            if (search.ConditionPopulation.Contains(">"))
-            {
-                var query = _departments.AsQueryable()
-                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) )
-                      .Select(p => p).ToList();
-                
-                var query2 = query.Where(p => p.Population < search.Population).Select( p=>p );
-                      return query;
-            }
-            else
-            {
-                var query = _departments.AsQueryable()
-                      .Where(p => p.CodePostale.Contains(search.PostalCode) && p.DepartmentNom.Contains(search.DepartmentName) )
-                      .Select(p => p).ToList();
-
-                var query2 = query.Where(p => p.Population > search.Population).Select( p=>p );
-                      return query;             
-            }        
-            
+            var query = _departments.AsQueryable();
+                if (!search.DepartmentName.Equals("string"))
+                {
+                    query = query.Where(p => p.DepartmentNom.Contains(search.DepartmentName)).Select( p=>p );
+                }
+                if (!search.PostalCode.Equals("string"))
+                {
+                    query = query.Where(p => p.CodePostale.Contains(search.PostalCode)).Select( p=>p );                 
+                }
+                if ( search.ConditionPopulation.Contains(">") && !search.ConditionPopulation.Equals("string") )
+                {
+                    query = query.Where(p => p.Population > search.Population).Select( p=>p );
+                }
+                if ( search.ConditionPopulation.Equals("<") && !search.ConditionPopulation.Equals("string") )
+                {
+                    query = query.Where(p => p.Population < search.Population).Select( p=>p );
+                }                   
+                return query;
         }        
 
     }  
